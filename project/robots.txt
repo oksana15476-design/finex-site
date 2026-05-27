@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /tmp/
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
+
+Host: https://finex.ru
+Sitemap: https://finex.ru/sitemap.xml
