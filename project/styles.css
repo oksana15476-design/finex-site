@@ -313,6 +313,14 @@
 .flag.aed { background: linear-gradient(135deg, #2c8054, #1a5836); }
 .flag.try { background: linear-gradient(135deg, #b53939, #7d1d1d); }
 .flag.inr { background: linear-gradient(135deg, #d68a3c, #8a5424); }
+/* Emoji flag */
+.flag-em {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; font-size: 18px; flex: 0 0 auto; line-height: 1;
+}
+.nav-mobile-dir .flag-em { width: 22px; height: 22px; font-size: 16px; }
+.country .flag-em         { width: 28px; height: 28px; font-size: 22px; }
+.nav-dd-item .flag-em     { width: 28px; height: 28px; font-size: 22px; }
 
 /* Skeleton */
 .sk { background: linear-gradient(90deg, var(--n-100) 0%, var(--n-50) 50%, var(--n-100) 100%); background-size: 200% 100%; animation: sk 1.4s linear infinite; border-radius: 6px; }
