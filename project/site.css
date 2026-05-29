@@ -945,7 +945,7 @@ footer { padding: 36px 0 20px; }
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.calc-out-rub { font-size: 14px; color: rgba(255, 255, 255, 0.75); margin-top: 10px; position: relative; }
+.calc-out-rub { font-size: 14px; color: rgba(255, 255, 255, 0.75); margin-top: 10px; position: relative; overflow-wrap: break-word; word-break: break-word; }
 .calc-out-rub .fx-mono { color: white; font-weight: 500; }
 
 .calc-rows {
@@ -970,7 +970,7 @@ footer { padding: 36px 0 20px; }
 }
 .calc-sla .dot { width: 8px; height: 8px; border-radius: 50%; background: #1f9d6d; box-shadow: 0 0 0 0 rgba(31,157,109,0.6); animation: pulse 1.8s ease-out infinite; flex: 0 0 auto; }
 .calc-sla b { color: white; font-family: var(--ff-mono); font-weight: 600; }
-.calc-sla span { color: rgba(255, 255, 255, 0.8); }
+.calc-sla span { color: rgba(255, 255, 255, 0.8); overflow-wrap: break-word; min-width: 0; }
 
 .calc-cta {
   margin-top: 24px;
@@ -983,6 +983,15 @@ footer { padding: 36px 0 20px; }
   .calc-input, .calc-output { padding: 28px 24px; }
   .calc-amount input { font-size: 26px; }
   .calc-out-main .v { font-size: 42px; }
+}
+@media (max-width: 480px) {
+  .calc-input, .calc-output { padding: 22px 18px; }
+  .calc-amount input { font-size: 22px; }
+  .calc-out-main .v { font-size: 32px; }
+  .calc-out-rub { font-size: 12px; white-space: normal; word-break: break-word; }
+  /* Preset chips: horizontal scroll instead of overflow clip */
+  .calc-presets { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
+  .calc-presets::-webkit-scrollbar { display: none; }
 }
 
 /* ============================================================
