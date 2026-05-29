@@ -1671,3 +1671,52 @@ footer { padding: 36px 0 20px; }
   .p2-finex { padding-left: 24px !important; }
   .p2-finex .p2-time { margin-top: 6px; }
 }
+
+/* ============================================================
+   MOBILE — global responsive fixes
+   ============================================================ */
+
+/* Hero: large number card */
+@media (max-width: 768px) {
+  .hero-visual { min-height: 360px; padding: 28px; }
+  .hv-num { font-size: 144px; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 34px; }
+  .hero .lede { font-size: 15px; }
+  .hv-num { font-size: 108px; }
+  .hero-visual { min-height: 300px; }
+  .hv-caption { font-size: 14px; }
+  .hero-trust { gap: 14px 20px; }
+}
+
+/* Geo-map card: less padding on mobile */
+@media (max-width: 768px) {
+  .geo-map { padding: 18px; border-radius: 16px; }
+}
+
+/* Social proof strip: stack on small screens */
+@media (max-width: 640px) {
+  .sp-row { flex-direction: column; align-items: flex-start; gap: 14px; }
+}
+
+/* Final CTA contacts: stack on small screens */
+@media (max-width: 640px) {
+  .cta-contacts { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+/* Footer bottom: stack on small screens */
+@media (max-width: 640px) {
+  .foot-bottom { flex-direction: column; gap: 6px; }
+}
+
+/* Route grid info panel on very small screens */
+@media (max-width: 480px) {
+  .route-city-list li { font-size: 13px; }
+  .route-info-note { font-size: 12px; }
+}
+
+/* Lead form submit button full-width on small screens */
+@media (max-width: 480px) {
+  .ql-form { grid-template-columns: 1fr; }
+}

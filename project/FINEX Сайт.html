@@ -1126,15 +1126,16 @@ document.querySelectorAll('[data-goal]').forEach(el => {
   var DST = new Set([156,784,792,356,764,704,392,410,276,380,688]);
   var MSC = [37.62,55.75];
   var HUBS = [
-    {c:[116.41,39.90],n:'Китай',   d:0},
-    {c:[55.27,25.20], n:'ОАЭ',    d:400},
-    {c:[28.98,41.01], n:'Турция', d:800},
-    {c:[72.87,19.08], n:'Индия',  d:1200},
-    {c:[100.52,13.75],n:'Таиланд',d:600},
-    {c:[105.83,21.03],n:'Вьетнам',d:1400},
-    {c:[126.98,37.57],n:'Корея',  d:1600},
-    {c:[8.68,50.11],  n:'Европа', d:1000}
+    {c:[116.41,39.90],n:'Китай',   la:'start', lox:9,  loy:4,   d:0},
+    {c:[55.27,25.20], n:'ОАЭ',     la:'start', lox:9,  loy:4,   d:400},
+    {c:[28.98,41.01], n:'Турция',  la:'end',   lox:-9, loy:-11, d:800},
+    {c:[72.87,19.08], n:'Индия',   la:'end',   lox:-9, loy:4,   d:1200},
+    {c:[100.52,13.75],n:'Таиланд', la:'end',   lox:-9, loy:4,   d:600},
+    {c:[105.83,21.03],n:'Вьетнам', la:'start', lox:9,  loy:-11, d:1400},
+    {c:[126.98,37.57],n:'Корея',   la:'start', lox:9,  loy:-11, d:1600},
+    {c:[8.68,50.11],  n:'Европа',  la:'end',   lox:-9, loy:4,   d:1000}
   ];
+  var MAPBB={type:'Feature',geometry:{type:'Polygon',coordinates:[[[-18,8],[-18,72],[148,72],[148,8],[-18,8]]]}};
   function ldScript(src){
     return new Promise(function(ok){
       var s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=ok;document.head.appendChild(s);
@@ -1147,7 +1148,7 @@ document.querySelectorAll('[data-goal]').forEach(el => {
   .then(function(world){
     if(!world)return;
     var svg=d3.select('#geo-world');
-    var proj=d3.geoNaturalEarth1().scale(W/6.3).translate([W/2,H/2]);
+    var proj=d3.geoNaturalEarth1().fitExtent([[20,20],[W-20,H-20]],MAPBB);
     var gp=d3.geoPath().projection(proj);
     var ctrs=topojson.feature(world,world.objects.countries);
     var bord=topojson.mesh(world,world.objects.countries,function(a,b){return a!==b;});
@@ -1192,9 +1193,10 @@ document.querySelectorAll('[data-goal]').forEach(el => {
       var g=svg.append('g').attr('clip-path','url(#mclip)');
       g.append('circle').attr('cx',cp[0]).attr('cy',cp[1]).attr('r',5)
         .attr('fill',HN).attr('stroke','#fff').attr('stroke-width','1.5');
-      g.append('text').attr('x',cp[0]).attr('y',cp[1]-9)
-        .attr('text-anchor','middle').attr('font-family','var(--ff-sans,sans-serif)')
-        .attr('font-size','8.5').attr('font-weight','700').attr('fill','#1a2338').text(h.n);
+      g.append('text').attr('x',cp[0]+(h.lox||0)).attr('y',cp[1]+(h.loy||-11)).attr('text-anchor',h.la||'middle')
+        .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','10').attr('font-weight','700')
+        .attr('fill','#1a2338').attr('stroke','rgba(238,243,250,0.95)').attr('stroke-width','3')
+        .attr('stroke-linejoin','round').attr('paint-order','stroke').text(h.n);
     });
     // Moscow hub + pulse
     var mg=svg.append('g');
@@ -1208,7 +1210,9 @@ document.querySelectorAll('[data-goal]').forEach(el => {
       .attr('fill',AC).attr('stroke','#fff').attr('stroke-width','2');
     mg.append('text').attr('x',mp[0]).attr('y',mp[1]-12)
       .attr('text-anchor','middle').attr('font-family','var(--ff-sans,sans-serif)')
-      .attr('font-size','8.5').attr('font-weight','800').attr('fill',AC).text('РОССИЯ');
+      .attr('font-size','9').attr('font-weight','800')
+      .attr('fill',AC).attr('stroke','rgba(238,243,250,0.95)').attr('stroke-width','3')
+      .attr('stroke-linejoin','round').attr('paint-order','stroke').text('РОССИЯ');
   });
 })();
 </script>
