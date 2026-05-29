@@ -422,8 +422,25 @@
       <h2 class="title">Куда доставляем платёж</h2>
       <p class="sub">Принимаем рубли — отправляем в рупиях, долларах или евро</p>
     </div>
-    <div class="geo-map">
-      <svg id="geo-india" viewBox="0 0 700 370" width="100%" preserveAspectRatio="xMidYMid meet" aria-label="Карта маршрутов FINEX в Индию" style="display:block;border-radius:12px;overflow:hidden;"></svg>
+    <div class="route-grid">
+      <div class="geo-map">
+        <svg id="geo-india" viewBox="0 0 700 370" preserveAspectRatio="xMidYMid meet" aria-label="Карта маршрутов FINEX в Индию" style="display:block;"></svg>
+      </div>
+      <div class="route-info">
+        <div class="route-legend">
+          <div class="route-legend-item"><span class="route-legend-dot src"></span>Москва</div>
+          <div class="route-legend-item"><span class="route-legend-dot dst"></span>Города получателей</div>
+        </div>
+        <p class="route-info-ttl">Основные направления</p>
+        <ul class="route-city-list">
+          <li><span class="rcl-dot"></span><span><strong>Мумбаи</strong> — финансовая столица Индии</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Дели</strong> — столица, крупный бизнес-центр</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Бангалор</strong> — технологический хаб</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Ченнаи</strong> — промышленный и торговый порт</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Хайдарабад</strong> — IT и фармацевтика</span></li>
+        </ul>
+        <p class="route-info-note">Работаем со всеми городами Индии. Другой город — уточните у менеджера.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -607,11 +624,11 @@ document.querySelectorAll('[data-goal]').forEach(el=>el.addEventListener('click'
   var DST=new Set([356]);
   var MSC=[37.62,55.75];
   var HUBS=[
-    {c:[72.87,19.08],n:'Мумбаи',d:0},
-    {c:[77.21,28.66],n:'Дели',d:300},
-    {c:[77.59,12.97],n:'Бангалор',d:600},
-    {c:[80.28,13.09],n:'Ченнаи',d:800},
-    {c:[78.47,17.38],n:'Хайдарабад',d:1000}
+    {c:[72.87,19.08],n:'Мумбаи',    la:'end',   lox:-9,loy:4,  d:0},
+    {c:[77.21,28.66],n:'Дели',      la:'middle',lox:0, loy:-11,d:300},
+    {c:[77.59,12.97],n:'Бангалор',  la:'end',   lox:-9,loy:4,  d:600},
+    {c:[80.28,13.09],n:'Ченнаи',    la:'start', lox:9, loy:4,  d:800},
+    {c:[78.47,17.38],n:'Хайдарабад',la:'start', lox:9, loy:-11,d:1000}
   ];
   var BB={type:'Feature',geometry:{type:'Polygon',coordinates:[[[25,5],[25,75],[100,75],[100,5],[25,5]]]}};
   function ldScript(src){return new Promise(function(ok){var s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=ok;document.head.appendChild(s);});}
@@ -654,8 +671,10 @@ document.querySelectorAll('[data-goal]').forEach(el=>el.addEventListener('click'
       var cp=proj(h.c);if(!cp)return;
       var g=svg.append('g').attr('clip-path','url(#india-clip)');
       g.append('circle').attr('cx',cp[0]).attr('cy',cp[1]).attr('r',5).attr('fill',HN).attr('stroke','#fff').attr('stroke-width','1.5');
-      g.append('text').attr('x',cp[0]).attr('y',cp[1]-9).attr('text-anchor','middle')
-        .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','9').attr('font-weight','700').attr('fill','#1a2338').text(h.n);
+      g.append('text').attr('x',cp[0]+(h.lox||0)).attr('y',cp[1]+(h.loy||-11)).attr('text-anchor',h.la||'middle')
+        .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','10').attr('font-weight','700')
+        .attr('fill','#1a2338').attr('stroke','rgba(238,243,250,0.95)').attr('stroke-width','3')
+        .attr('stroke-linejoin','round').attr('paint-order','stroke').text(h.n);
     });
     var mg=svg.append('g');
     (function pulse(){
@@ -666,7 +685,9 @@ document.querySelectorAll('[data-goal]').forEach(el=>el.addEventListener('click'
     })();
     mg.append('circle').attr('cx',mp[0]).attr('cy',mp[1]).attr('r',7).attr('fill',AC).attr('stroke','#fff').attr('stroke-width','2');
     mg.append('text').attr('x',mp[0]).attr('y',mp[1]-12).attr('text-anchor','middle')
-      .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','8.5').attr('font-weight','800').attr('fill',AC).text('МОСКВА');
+      .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','9').attr('font-weight','800')
+      .attr('fill',AC).attr('stroke','rgba(238,243,250,0.95)').attr('stroke-width','3')
+      .attr('stroke-linejoin','round').attr('paint-order','stroke').text('МОСКВА');
   });
 })();
 </script>

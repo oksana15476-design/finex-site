@@ -1236,13 +1236,23 @@ footer { padding: 36px 0 20px; }
 /* ============================================================
    ROUTE MAP SECTION
    ============================================================ */
-.route-section { padding: 72px 0; background: var(--n-0); }
-.route-section .geo-map { margin-top: 40px; max-width: 860px; }
+.route-section { padding: 80px 0; background: var(--n-0); }
+.route-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: start; margin-top: 40px; }
+@media (max-width: 900px) { .route-grid { grid-template-columns: 1fr; gap: 32px; } }
+.route-section .geo-map { margin: 0; aspect-ratio: auto; }
+.route-section .geo-map svg { width: 100%; height: auto; }
 .route-section .geo-map text { font-family: var(--ff-sans); }
-.route-city-dot { fill: var(--accent); }
-.route-city-dot.dim { fill-opacity: 0.55; }
-.route-label { fill: var(--n-800); font-size: 12px; font-weight: 500; }
-.route-label.sub { fill: var(--n-500); font-size: 10.5px; font-weight: 400; }
+.route-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 20px; }
+.route-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--n-600); }
+.route-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.route-legend-dot.src { background: rgba(62,91,250,0.6); }
+.route-legend-dot.dst { background: #ffb547; }
+.route-info-ttl { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--n-500); margin: 0 0 16px; }
+.route-city-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.route-city-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--n-700); }
+.rcl-dot { width: 8px; height: 8px; border-radius: 50%; background: #ffb547; flex-shrink: 0; margin-top: 5px; }
+.route-city-list strong { font-weight: 600; color: var(--n-900); }
+.route-info-note { margin-top: 20px; font-size: 13px; color: var(--n-500); line-height: 1.5; border-top: 1px solid var(--n-100); padding-top: 16px; }
 
 /* ============================================================
    LEAD FORM (inside Final CTA)

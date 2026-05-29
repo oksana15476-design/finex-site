@@ -480,8 +480,24 @@
       <h2 class="title">Куда доставляем платёж</h2>
       <p class="sub">Принимаем рубли — отправляем в турецкие лиры, евро или доллары</p>
     </div>
-    <div class="geo-map">
-      <svg id="geo-turkey" viewBox="0 0 700 370" width="100%" preserveAspectRatio="xMidYMid meet" aria-label="Карта маршрутов FINEX в Турцию" style="display:block;border-radius:12px;overflow:hidden;"></svg>
+    <div class="route-grid">
+      <div class="geo-map">
+        <svg id="geo-turkey" viewBox="0 0 700 370" preserveAspectRatio="xMidYMid meet" aria-label="Карта маршрутов FINEX в Турцию" style="display:block;"></svg>
+      </div>
+      <div class="route-info">
+        <div class="route-legend">
+          <div class="route-legend-item"><span class="route-legend-dot src"></span>Москва</div>
+          <div class="route-legend-item"><span class="route-legend-dot dst"></span>Города получателей</div>
+        </div>
+        <p class="route-info-ttl">Основные направления</p>
+        <ul class="route-city-list">
+          <li><span class="rcl-dot"></span><span><strong>Стамбул</strong> — главный деловой и финансовый центр</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Анкара</strong> — столица, государственные структуры</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Измир</strong> — крупный торговый порт</span></li>
+          <li><span class="rcl-dot"></span><span><strong>Газиантеп</strong> — промышленный и торговый хаб юга</span></li>
+        </ul>
+        <p class="route-info-note">Работаем со всеми городами Турции. Другой город — уточните у менеджера.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -777,10 +793,10 @@ document.querySelectorAll('[data-goal]').forEach(el => {
   var DST=new Set([792]);
   var MSC=[37.62,55.75];
   var HUBS=[
-    {c:[28.98,41.01],n:'Стамбул',d:0},
-    {c:[32.85,39.93],n:'Анкара',d:300},
-    {c:[27.14,38.42],n:'Измир',d:600},
-    {c:[37.38,37.07],n:'Газиантеп',d:900}
+    {c:[28.98,41.01],n:'Стамбул',   la:'end',   lox:-9,loy:4,  d:0},
+    {c:[32.85,39.93],n:'Анкара',    la:'middle',lox:0, loy:-11,d:300},
+    {c:[27.14,38.42],n:'Измир',     la:'end',   lox:-9,loy:4,  d:600},
+    {c:[37.38,37.07],n:'Газиантеп', la:'start', lox:9, loy:4,  d:900}
   ];
   var BB={type:'Feature',geometry:{type:'Polygon',coordinates:[[[15,30],[15,72],[55,72],[55,30],[15,30]]]}};
   function ldScript(src){return new Promise(function(ok){var s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=ok;document.head.appendChild(s);});}
@@ -823,8 +839,10 @@ document.querySelectorAll('[data-goal]').forEach(el => {
       var cp=proj(h.c);if(!cp)return;
       var g=svg.append('g').attr('clip-path','url(#turkey-clip)');
       g.append('circle').attr('cx',cp[0]).attr('cy',cp[1]).attr('r',5).attr('fill',HN).attr('stroke','#fff').attr('stroke-width','1.5');
-      g.append('text').attr('x',cp[0]).attr('y',cp[1]-9).attr('text-anchor','middle')
-        .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','9').attr('font-weight','700').attr('fill','#1a2338').text(h.n);
+      g.append('text').attr('x',cp[0]+(h.lox||0)).attr('y',cp[1]+(h.loy||-11)).attr('text-anchor',h.la||'middle')
+        .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','10').attr('font-weight','700')
+        .attr('fill','#1a2338').attr('stroke','rgba(238,243,250,0.95)').attr('stroke-width','3')
+        .attr('stroke-linejoin','round').attr('paint-order','stroke').text(h.n);
     });
     var mg=svg.append('g');
     (function pulse(){
@@ -835,7 +853,9 @@ document.querySelectorAll('[data-goal]').forEach(el => {
     })();
     mg.append('circle').attr('cx',mp[0]).attr('cy',mp[1]).attr('r',7).attr('fill',AC).attr('stroke','#fff').attr('stroke-width','2');
     mg.append('text').attr('x',mp[0]).attr('y',mp[1]-12).attr('text-anchor','middle')
-      .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','8.5').attr('font-weight','800').attr('fill',AC).text('МОСКВА');
+      .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','9').attr('font-weight','800')
+      .attr('fill',AC).attr('stroke','rgba(238,243,250,0.95)').attr('stroke-width','3')
+      .attr('stroke-linejoin','round').attr('paint-order','stroke').text('МОСКВА');
   });
 })();
 </script>
