@@ -480,38 +480,7 @@
       <p class="sub">Принимаем рубли — отправляем в евро, доллары или местную валюту</p>
     </div>
     <div class="geo-map">
-      <svg viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="90" cy="115" r="30" fill="var(--accent)" fill-opacity="0.08" stroke="var(--accent)" stroke-width="1.5" stroke-opacity="0.35"/>
-        <circle cx="90" cy="115" r="17" fill="var(--accent)" fill-opacity="0.18"/>
-        <circle class="hub" cx="90" cy="115" r="8" fill="var(--accent)"/>
-        <circle class="hub-ring d1" cx="90" cy="115"/>
-        <circle class="hub-ring d2" cx="90" cy="115"/>
-        <circle class="hub-ring d3" cx="90" cy="115"/>
-        <text x="90" y="158" text-anchor="middle" font-size="11" font-weight="600" fill="var(--n-600)">Россия</text>
-        <circle cx="18" cy="60" r="3" fill="var(--accent)" fill-opacity="0.5"/>
-        <text x="26" y="64" font-size="10" fill="var(--n-500)">Москва</text>
-        <circle cx="14" cy="87" r="2.5" fill="var(--accent)" fill-opacity="0.35"/>
-        <text x="22" y="91" font-size="10" fill="var(--n-400)">Санкт-Петербург</text>
-        <circle cx="10" cy="133" r="2.5" fill="var(--accent)" fill-opacity="0.25"/>
-        <text x="18" y="137" font-size="9.5" fill="var(--n-400)">Екатеринбург</text>
-        <circle cx="8" cy="158" r="2" fill="var(--accent)" fill-opacity="0.2"/>
-        <text x="16" y="162" font-size="9.5" fill="var(--n-400)">Новосибирск</text>
-        <path class="flow" d="M 120 102 C 250 72, 370 66, 476 74"/>
-        <path class="flow" d="M 120 109 C 250 96, 370 100, 476 105"/>
-        <path class="flow" d="M 120 121 C 250 134, 370 136, 476 138"/>
-        <path class="flow" d="M 120 128 C 250 154, 370 162, 476 168"/>
-        <rect x="253" y="105" width="60" height="22" rx="11" fill="var(--accent)" fill-opacity="0.1" stroke="var(--accent)" stroke-width="0.8" stroke-opacity="0.3"/>
-        <text x="283" y="120" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--accent)">FINEX</text>
-        <circle cx="476" cy="74" r="6" fill="var(--accent)"/>
-        <text x="488" y="78" font-size="12" font-weight="600" fill="var(--n-900)">Германия · Австрия</text>
-        <circle cx="476" cy="105" r="5.5" fill="var(--accent)" fill-opacity="0.85"/>
-        <text x="488" y="109" font-size="12" font-weight="500" fill="var(--n-800)">Италия · Испания</text>
-        <circle cx="476" cy="138" r="5.5" fill="var(--accent)" fill-opacity="0.8"/>
-        <text x="488" y="142" font-size="12" font-weight="500" fill="var(--n-800)">Сербия · Венгрия</text>
-        <circle cx="476" cy="168" r="5" fill="var(--accent)" fill-opacity="0.6"/>
-        <text x="488" y="172" font-size="11.5" fill="var(--n-700)">Другие страны ЕС</text>
-        <text x="492" y="215" text-anchor="middle" font-size="11" font-weight="600" fill="var(--n-500)">Европа · 2–5 дней</text>
-      </svg>
+      <svg id="geo-europe" viewBox="0 0 700 370" width="100%" preserveAspectRatio="xMidYMid meet" aria-label="Карта маршрутов FINEX в Европу" style="display:block;border-radius:12px;overflow:hidden;"></svg>
     </div>
   </div>
 </section>
@@ -796,6 +765,77 @@ document.querySelectorAll('[data-goal]').forEach(el => {
   const btn_r = document.getElementById('cookie-reject');
   if(btn_a) btn_a.addEventListener('click', () => { localStorage.setItem('cookie-consent','1'); if(banner) banner.style.display='none'; });
   if(btn_r) btn_r.addEventListener('click', () => { localStorage.setItem('cookie-consent','0'); if(banner) banner.style.display='none'; });
+})();
+
+// ─── EUROPE MAP D3.js ───
+(function(){
+  var el=document.getElementById('geo-europe');
+  if(!el)return;
+  var W=700,H=370,AC='#3e5bfa',HN='#ffb547';
+  var SRC=new Set([643]);
+  var DST=new Set([276,380,688,40,348]);
+  var MSC=[37.62,55.75];
+  var HUBS=[
+    {c:[13.40,52.52],n:'Берлин',d:0},
+    {c:[12.49,41.90],n:'Рим',d:300},
+    {c:[16.37,48.21],n:'Вена',d:600},
+    {c:[20.46,44.82],n:'Белград',d:900}
+  ];
+  var BB={type:'Feature',geometry:{type:'Polygon',coordinates:[[[-5,35],[-5,72],[55,72],[55,35],[-5,35]]]}};
+  function ldScript(src){return new Promise(function(ok){var s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=ok;document.head.appendChild(s);});}
+  ldScript('https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js')
+  .then(function(){return ldScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js');})
+  .then(function(){return window.d3?fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'):null;})
+  .then(function(r){return r&&r.ok?r.json():null;})
+  .then(function(world){
+    if(!world)return;
+    var svg=d3.select('#geo-europe');
+    var proj=d3.geoNaturalEarth1().fitExtent([[20,20],[W-20,H-20]],BB);
+    var gp=d3.geoPath().projection(proj);
+    var ctrs=topojson.feature(world,world.objects.countries);
+    var bord=topojson.mesh(world,world.objects.countries,function(a,b){return a!==b;});
+    svg.append('defs').append('clipPath').attr('id','europe-clip')
+      .append('rect').attr('width',W).attr('height',H).attr('rx',12);
+    svg.append('rect').attr('width',W).attr('height',H).attr('rx',12).attr('fill','#EEF3FA');
+    svg.append('path').datum({type:'Sphere'}).attr('d',gp).attr('fill','#EEF3FA');
+    svg.append('path').datum(d3.geoGraticule()()).attr('d',gp).attr('fill','none')
+      .attr('stroke','rgba(170,190,215,0.5)').attr('stroke-width','0.4');
+    svg.append('g').attr('clip-path','url(#europe-clip)')
+      .selectAll('path').data(ctrs.features).join('path').attr('d',gp)
+      .attr('fill',function(d){var id=+d.id;if(SRC.has(id))return 'rgba(62,91,250,0.32)';if(DST.has(id))return 'rgba(255,181,71,0.30)';return '#D6E1ED';})
+      .attr('stroke','#BFC9D6').attr('stroke-width','0.35');
+    svg.append('path').datum(bord).attr('d',gp).attr('fill','none')
+      .attr('stroke','#C2CED9').attr('stroke-width','0.3');
+    var mp=proj(MSC);
+    HUBS.forEach(function(h){
+      var cp=proj(h.c);if(!cp)return;
+      var cx=(mp[0]+cp[0])/2,cy=Math.min(mp[1],cp[1])-35;
+      var pe=svg.append('path').attr('clip-path','url(#europe-clip)')
+        .attr('d','M'+mp[0]+','+mp[1]+' Q'+cx+','+cy+' '+cp[0]+','+cp[1])
+        .attr('fill','none').attr('stroke',AC).attr('stroke-opacity','0.5').attr('stroke-width','1.4');
+      var len=pe.node().getTotalLength();
+      pe.attr('stroke-dasharray',len+' '+len).attr('stroke-dashoffset',len);
+      setTimeout(function(){pe.transition().duration(900).ease(d3.easeLinear).attr('stroke-dashoffset',0)
+        .on('end',function(){d3.select(this).attr('stroke-dasharray','5 3').attr('stroke-dashoffset',null);});},h.d);
+    });
+    HUBS.forEach(function(h){
+      var cp=proj(h.c);if(!cp)return;
+      var g=svg.append('g').attr('clip-path','url(#europe-clip)');
+      g.append('circle').attr('cx',cp[0]).attr('cy',cp[1]).attr('r',5).attr('fill',HN).attr('stroke','#fff').attr('stroke-width','1.5');
+      g.append('text').attr('x',cp[0]).attr('y',cp[1]-9).attr('text-anchor','middle')
+        .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','9').attr('font-weight','700').attr('fill','#1a2338').text(h.n);
+    });
+    var mg=svg.append('g');
+    (function pulse(){
+      mg.append('circle').attr('cx',mp[0]).attr('cy',mp[1]).attr('r',8)
+        .attr('fill','none').attr('stroke',AC).attr('stroke-width','1.5').attr('opacity','0.6')
+        .transition().duration(2000).ease(d3.easeLinear).attr('r',26).attr('opacity',0).remove();
+      setTimeout(pulse,2200);
+    })();
+    mg.append('circle').attr('cx',mp[0]).attr('cy',mp[1]).attr('r',7).attr('fill',AC).attr('stroke','#fff').attr('stroke-width','2');
+    mg.append('text').attr('x',mp[0]).attr('y',mp[1]-12).attr('text-anchor','middle')
+      .attr('font-family','var(--ff-sans,sans-serif)').attr('font-size','8.5').attr('font-weight','800').attr('fill',AC).text('МОСКВА');
+  });
 })();
 </script>
 </body>
