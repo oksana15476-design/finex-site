@@ -472,32 +472,71 @@
   </div>
 </section>
 
-<!-- ─── QUICK LEAD ─── -->
-<section class="quick-lead" id="quick" style="background:linear-gradient(180deg,var(--accent-bg),rgba(31,84,168,.04));">
+<!-- ─── ROUTE MAP ─── -->
+<section class="route-section" id="routes">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Оставьте заявку</span>
-      <h2 class="title">Расчёт бесплатно — перезвоним за 10 минут</h2>
-      <p class="sub">Укажите город — менеджер по Турции свяжется сразу с точным расчётом.</p>
+      <span class="eyebrow">Маршруты · Из России</span>
+      <h2 class="title">Куда доставляем платёж</h2>
+      <p class="sub">Принимаем рубли — отправляем в турецкие лиры, евро или доллары</p>
     </div>
-    <form class="lead-form" id="quick-form" onsubmit="return handleLead(event,'quick_turkey')">
-      <div class="lf-row">
-        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required/>
-        <select name="city" required>
-          <option value="" disabled selected>Город получателя</option>
-          <option>Стамбул</option>
-          <option>Анкара</option>
-          <option>Измир</option>
-          <option>Бурса</option>
-          <option>Газиантеп</option>
-          <option>Другой город</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary btn-lg" data-goal="quick_lead_turkey">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        Получить расчёт за 10 мин
+    <div class="geo-map">
+      <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="90" cy="110" r="30" fill="var(--accent)" fill-opacity="0.08" stroke="var(--accent)" stroke-width="1.5" stroke-opacity="0.35"/>
+        <circle cx="90" cy="110" r="17" fill="var(--accent)" fill-opacity="0.18"/>
+        <circle class="hub" cx="90" cy="110" r="8" fill="var(--accent)"/>
+        <circle class="hub-ring d1" cx="90" cy="110"/>
+        <circle class="hub-ring d2" cx="90" cy="110"/>
+        <circle class="hub-ring d3" cx="90" cy="110"/>
+        <text x="90" y="154" text-anchor="middle" font-size="11" font-weight="600" fill="var(--n-600)">Россия</text>
+        <circle cx="18" cy="58" r="3" fill="var(--accent)" fill-opacity="0.5"/>
+        <text x="26" y="62" font-size="10" fill="var(--n-500)">Москва</text>
+        <circle cx="14" cy="85" r="2.5" fill="var(--accent)" fill-opacity="0.35"/>
+        <text x="22" y="89" font-size="10" fill="var(--n-400)">Санкт-Петербург</text>
+        <circle cx="10" cy="130" r="2.5" fill="var(--accent)" fill-opacity="0.25"/>
+        <text x="18" y="134" font-size="9.5" fill="var(--n-400)">Екатеринбург</text>
+        <circle cx="8" cy="155" r="2" fill="var(--accent)" fill-opacity="0.2"/>
+        <text x="16" y="159" font-size="9.5" fill="var(--n-400)">Новосибирск</text>
+        <path class="flow" d="M 120 98 C 250 70, 370 65, 476 72"/>
+        <path class="flow" d="M 120 110 C 250 110, 370 110, 476 110"/>
+        <path class="flow" d="M 120 122 C 250 148, 370 150, 476 148"/>
+        <rect x="253" y="100" width="60" height="22" rx="11" fill="var(--accent)" fill-opacity="0.1" stroke="var(--accent)" stroke-width="0.8" stroke-opacity="0.3"/>
+        <text x="283" y="115" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--accent)">FINEX</text>
+        <circle cx="476" cy="72" r="6" fill="var(--accent)"/>
+        <text x="488" y="76" font-size="12" font-weight="600" fill="var(--n-900)">Стамбул · Бурса</text>
+        <circle cx="476" cy="110" r="5.5" fill="var(--accent)" fill-opacity="0.8"/>
+        <text x="488" y="114" font-size="12" font-weight="500" fill="var(--n-800)">Анкара · Измир</text>
+        <circle cx="476" cy="148" r="5" fill="var(--accent)" fill-opacity="0.6"/>
+        <text x="488" y="152" font-size="11.5" fill="var(--n-700)">Газиантеп · Коня · Кайсери</text>
+        <text x="490" y="205" text-anchor="middle" font-size="11" font-weight="600" fill="var(--n-500)">Турция · 1–3 дня</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── QUICK LEAD ─── -->
+<section class="quick-lead" id="quick">
+  <div class="wrap ql-grid">
+    <div class="ql-copy">
+      <h3>Расчёт бесплатно — перезвоним за 10 минут</h3>
+      <p>Укажите город — менеджер по Турции свяжется сразу с точным расчётом.</p>
+    </div>
+    <form class="ql-form" id="quick-lead-form" onsubmit="return handleLead(event,'quick_turkey')">
+      <input class="lf-field" type="tel" name="phone" placeholder="+7 · телефон" required/>
+      <select class="lf-field" name="city">
+        <option value="" disabled selected>Город получателя</option>
+        <option value="istanbul">Стамбул</option>
+        <option value="ankara">Анкара</option>
+        <option value="izmir">Измир</option>
+        <option value="bursa">Бурса</option>
+        <option value="gaziantep">Газиантеп</option>
+        <option value="other">Другой город</option>
+      </select>
+      <button type="submit" class="lf-submit" data-goal="quick_lead_turkey">
+        Перезвонить за 10 мин
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
-      <p class="lf-legal">Нажимая кнопку, вы соглашаетесь с <a href="#">политикой конфиденциальности</a>.</p>
+      <div class="ql-disclaimer">Нажимая, вы соглашаетесь на обработку персональных данных.</div>
     </form>
   </div>
 </section>
@@ -505,32 +544,35 @@
 <!-- ─── FINAL CTA ─── -->
 <section class="final-cta" id="cta">
   <div class="wrap">
-    <div class="fc-inner">
-      <span class="eyebrow" style="color:rgba(255,255,255,.6);">Начните прямо сейчас</span>
-      <h2>Платёж в Турцию — сегодня</h2>
-      <p>Оставьте заявку — менеджер по Турции свяжется за 10 минут и подготовит точный расчёт.</p>
-      <form class="fc-form" onsubmit="return handleLead(event,'final_cta_turkey')">
-        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required/>
-        <select name="city" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:var(--r-md);padding:0 16px;font-family:var(--ff-sans);font-size:15px;cursor:pointer;">
-          <option value="" style="background:#1a1f3c;color:#fff">Куда платим?</option>
-          <option style="background:#1a1f3c;color:#fff">Стамбул</option>
-          <option style="background:#1a1f3c;color:#fff">Анкара</option>
-          <option style="background:#1a1f3c;color:#fff">Измир</option>
-          <option style="background:#1a1f3c;color:#fff">Бурса</option>
-          <option style="background:#1a1f3c;color:#fff">Газиантеп · Малый город</option>
+    <h2>Платёж в Турцию — сегодня</h2>
+    <p class="lead">Оставьте заявку — менеджер по Турции свяжется за 10 минут с точным расчётом.</p>
+    <form class="lead-form" id="lead-form" onsubmit="return handleLead(event,'final_cta_turkey')">
+      <div class="lf-grid">
+        <input class="lf-field" type="tel" name="phone" placeholder="+7 · телефон" required/>
+        <select class="lf-field" name="city" required>
+          <option value="" disabled selected>Город получателя</option>
+          <option value="istanbul">Стамбул</option>
+          <option value="ankara">Анкара</option>
+          <option value="izmir">Измир</option>
+          <option value="bursa">Бурса</option>
+          <option value="gaziantep">Газиантеп</option>
+          <option value="other">Другой город</option>
         </select>
-        <button type="submit" class="btn btn-primary btn-lg" data-goal="final_cta_turkey">
+        <button type="submit" class="lf-submit" data-goal="final_cta_turkey">
           Получить расчёт за 10 мин
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
-      </form>
-      <div class="fc-trust">
-        <span>108 мин рекорд</span>
-        <span class="dot-sep">·</span>
-        <span>0,85% всё включено</span>
-        <span class="dot-sep">·</span>
-        <span>ЦБ РФ курс</span>
-        <span class="dot-sep">·</span>
-        <span>Все требования известны</span>
+      </div>
+      <div class="lf-disclaimer">Отправляя форму, вы соглашаетесь с политикой обработки персональных данных.</div>
+    </form>
+    <div class="cta-contacts">
+      <div class="cta-contact">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></span>
+        <div><div class="l">Telegram</div><div class="v"><a href="https://t.me/finex_turkey" style="color:inherit">@finex_turkey</a></div></div>
+      </div>
+      <div class="cta-contact">
+        <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 012 1.18 2 2 0 013.92 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></span>
+        <div><div class="l">Телефон</div><div class="v"><a href="tel:+74951234567" style="color:inherit">+7 (495) 123-45-67</a></div></div>
       </div>
     </div>
   </div>
