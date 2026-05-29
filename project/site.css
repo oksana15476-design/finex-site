@@ -1676,47 +1676,45 @@ footer { padding: 36px 0 20px; }
    MOBILE — global responsive fixes
    ============================================================ */
 
-/* Hero: large number card */
-@media (max-width: 768px) {
-  .hero-visual { min-height: 360px; padding: 28px; }
-  .hv-num { font-size: 144px; }
-}
+/* Small phone (≤480px): tighter spacing, smaller type */
 @media (max-width: 480px) {
-  .hero h1 { font-size: 34px; }
+  .wrap { padding: 0 16px; }
+  section { padding: 48px 0; }
+  .hero h1 { font-size: 32px; }
   .hero .lede { font-size: 15px; }
-  .hv-num { font-size: 108px; }
-  .hero-visual { min-height: 300px; }
+  .hero-grid { gap: 28px; }
+  .hero-trust { gap: 12px 18px; }
+  .hv-num { font-size: 96px; }
+  .hv-num .unit { font-size: 18px; margin-bottom: 8px; }
+  .hero-visual { min-height: 280px; padding: 22px; }
   .hv-caption { font-size: 14px; }
-  .hero-trust { gap: 14px 20px; }
+  .hv-stage .l { font-size: 12px; }
+  .pricing-hero .pct { font-size: 88px; }
+  .final-cta h2 { font-size: 28px; }
+  .notfor .h { font-size: 22px; }
+  .section-head { margin-bottom: 32px; }
+  .section-head .title { font-size: 24px; }
+  .route-city-list li { font-size: 13px; }
+  .route-info-note { font-size: 12px; }
+  .metric .v { font-size: 28px; }
+  .metrics-grid { gap: 20px 16px; }
+  .calc-juri-grid { grid-template-columns: repeat(2, 1fr); }
+  body { overflow-x: hidden; }
 }
 
-/* Geo-map card: less padding on mobile */
+/* Geo-map card: less padding on tablets and phones */
 @media (max-width: 768px) {
   .geo-map { padding: 18px; border-radius: 16px; }
 }
 
-/* Social proof strip: stack on small screens */
+/* Social proof, CTA contacts, footer bottom: stack vertically */
 @media (max-width: 640px) {
   .sp-row { flex-direction: column; align-items: flex-start; gap: 14px; }
-}
-
-/* Final CTA contacts: stack on small screens */
-@media (max-width: 640px) {
   .cta-contacts { flex-direction: column; align-items: flex-start; gap: 16px; }
-}
-
-/* Footer bottom: stack on small screens */
-@media (max-width: 640px) {
   .foot-bottom { flex-direction: column; gap: 6px; }
 }
 
-/* Route grid info panel on very small screens */
-@media (max-width: 480px) {
-  .route-city-list li { font-size: 13px; }
-  .route-info-note { font-size: 12px; }
-}
-
-/* Lead form submit button full-width on small screens */
-@media (max-width: 480px) {
-  .ql-form { grid-template-columns: 1fr; }
+/* Footer columns: single column on small phones */
+@media (max-width: 540px) {
+  .foot-grid { grid-template-columns: 1fr !important; }
 }
