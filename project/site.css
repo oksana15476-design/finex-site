@@ -3,7 +3,7 @@
    Builds on top of styles.css (design tokens)
    ============================================================ */
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   margin: 0;
   font-family: var(--ff-sans);
@@ -12,7 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'ss01';
   line-height: 1.5;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 * { box-sizing: border-box; }
 a { color: inherit; text-decoration: none; }
@@ -60,7 +60,6 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   top: 100%;
   left: 0; right: 0;
-  z-index: 49;
   display: none;
   flex-direction: column;
   padding: 14px 20px 22px;
@@ -1014,7 +1013,7 @@ footer { padding: 36px 0 20px; }
   .calc-cta { flex-direction: column; }
   .calc-cta .btn { width: 100%; }
   /* Preset chips: horizontal scroll instead of overflow clip */
-  .calc-presets { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
+  .calc-presets { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
   .calc-presets::-webkit-scrollbar { display: none; }
 }
 
@@ -1580,12 +1579,18 @@ footer { padding: 36px 0 20px; }
   color: rgba(255, 255, 255, 0.7) !important; transition: background .12s, color .12s;
 }
 .util-soc:hover { background: rgba(255, 255, 255, 0.18); color: white !important; }
+/* CSS fallback when JS ticker not initialised: limit visible rates to fit 40px height */
+.util-rates:not(.ticker-anim) .util-rate:nth-child(n+4),
+.util-rates:not(.ticker-anim) .util-rate__note { display: none; }
+@media (max-width: 640px) {
+  .util-rates:not(.ticker-anim) .util-rate:nth-child(n+3) { display: none; }
+}
+
 @media (max-width: 900px) {
   .util-contacts .util-email { display: none; }
-  /* ticker shows all rates — no hiding needed */
 }
 @media (max-width: 640px) {
-  .util-contacts { display: none; } /* full width for ticker on small screens */
+  .util-contacts { display: none; }
 }
 @media (max-width: 480px) {
   .utilbar__inner { height: 36px; }
@@ -1758,7 +1763,6 @@ footer { padding: 36px 0 20px; }
   .j-sla { padding: 20px 18px; gap: 20px; }
   .pricing-card { padding: 36px 22px; }
   .pricing-hero .pct { font-size: 80px; }
-  body { overflow-x: hidden; }
 }
 
 /* Geo-map card: less padding on tablets and phones */

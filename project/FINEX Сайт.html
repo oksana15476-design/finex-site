@@ -917,8 +917,14 @@
   const burger = document.getElementById('nav-burger');
   const menu = document.getElementById('nav-mobile');
   if (!burger || !menu) return;
-  burger.addEventListener('click', () => menu.classList.toggle('open'));
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+  burger.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
 })();
 
 // ─── 108 counter animation
