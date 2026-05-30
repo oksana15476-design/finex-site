@@ -899,6 +899,19 @@
 </div>
 
 <script>
+// ─── Utility bar scrolling ticker
+(() => {
+  const rates = document.querySelector('.util-rates');
+  if (!rates) return;
+  const original = rates.innerHTML;
+  rates.innerHTML = original + original; // duplicate for seamless loop
+  rates.classList.add('ticker-anim');
+  const wrap = document.createElement('div');
+  wrap.className = 'util-ticker-wrap';
+  rates.parentNode.insertBefore(wrap, rates);
+  wrap.appendChild(rates);
+})();
+
 // ─── Mobile burger
 (() => {
   const burger = document.getElementById('nav-burger');

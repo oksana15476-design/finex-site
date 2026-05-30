@@ -630,6 +630,19 @@
 </div>
 
 <script>
+// ─── Utility bar scrolling ticker
+(() => {
+  const rates = document.querySelector('.util-rates');
+  if (!rates) return;
+  const original = rates.innerHTML;
+  rates.innerHTML = original + original;
+  rates.classList.add('ticker-anim');
+  const wrap = document.createElement('div');
+  wrap.className = 'util-ticker-wrap';
+  rates.parentNode.insertBefore(wrap, rates);
+  wrap.appendChild(rates);
+})();
+
 // ─── RATES (ЦБ РФ 23.05.2026) ───
 const RATES = { EUR:82.5445, USD:71.2090, TRY:1.56267 };
 const FEE = 0.0085;

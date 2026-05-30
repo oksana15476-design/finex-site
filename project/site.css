@@ -3,7 +3,7 @@
    Builds on top of styles.css (design tokens)
    ============================================================ */
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   margin: 0;
   font-family: var(--ff-sans);
@@ -12,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-feature-settings: 'ss01';
   line-height: 1.5;
+  overflow-x: hidden;
 }
 * { box-sizing: border-box; }
 a { color: inherit; text-decoration: none; }
@@ -39,7 +40,7 @@ a { color: inherit; text-decoration: none; }
 .nav-links { display: flex; gap: 28px; flex: 1; }
 .nav-links a { font-size: 14px; color: var(--n-600); font-weight: 500; white-space: nowrap; }
 .nav-links a:hover { color: var(--n-900); }
-.nav-ctas { display: flex; gap: 10px; align-items: center; }
+.nav-ctas { display: flex; gap: 10px; align-items: center; margin-left: auto; }
 
 /* Mobile burger */
 .nav-burger {
@@ -56,11 +57,16 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-burger:hover { background: var(--n-25); }
 .nav-mobile {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  z-index: 49;
   display: none;
   flex-direction: column;
-  padding: 14px 24px 22px;
+  padding: 14px 20px 22px;
   background: var(--n-0);
   border-top: 1px solid var(--n-100);
+  box-shadow: 0 20px 40px -10px rgba(15, 22, 35, 0.14);
   gap: 4px;
 }
 .nav-mobile.open { display: flex; }
@@ -174,6 +180,7 @@ section { padding: 96px 0; position: relative; }
   min-height: 480px;
   overflow: hidden;
   box-shadow: 0 30px 60px -20px rgba(15, 22, 35, 0.32), 0 8px 24px -8px rgba(15, 22, 35, 0.15);
+  min-width: 0; max-width: 100%;
 }
 .hero-visual::before {
   content: '';
@@ -864,12 +871,15 @@ footer { padding: 36px 0 20px; }
   display: grid;
   grid-template-columns: 1.05fr 1fr;
   box-shadow: 0 24px 48px -16px rgba(15, 22, 35, 0.10);
+  max-width: 100%;
+  min-width: 0;
 }
 @media (max-width: 900px) { .calc-card { grid-template-columns: 1fr; } }
 
 .calc-input {
   padding: 40px;
   border-right: 1px solid var(--n-100);
+  min-width: 0;
 }
 @media (max-width: 900px) { .calc-input { border-right: 0; border-bottom: 1px solid var(--n-100); } }
 .calc-input h3 { font-size: 18px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.005em; }
@@ -927,6 +937,7 @@ footer { padding: 36px 0 20px; }
   padding: 40px;
   background: linear-gradient(160deg, var(--p-900), var(--p-700) 75%);
   color: white; position: relative; overflow: hidden;
+  min-width: 0;
 }
 .calc-output::before {
   content: ''; position: absolute; right: -100px; top: -100px;
@@ -1523,10 +1534,30 @@ footer { padding: 36px 0 20px; }
   color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
 }
 .utilbar__inner {
   display: flex; align-items: center; justify-content: space-between;
   height: 40px; gap: 24px;
+  overflow: hidden;
+}
+
+/* Scrolling ticker wrapper (injected by JS) */
+.util-ticker-wrap {
+  flex: 1; min-width: 0; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.util-rates.ticker-anim {
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: util-ticker 28s linear infinite;
+  gap: 28px;
+}
+.util-rates.ticker-anim:hover { animation-play-state: paused; }
+@keyframes util-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 .util-rates { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .util-rate { display: inline-flex; align-items: baseline; gap: 6px; font-family: var(--ff-mono); }
@@ -1550,13 +1581,14 @@ footer { padding: 36px 0 20px; }
 }
 .util-soc:hover { background: rgba(255, 255, 255, 0.18); color: white !important; }
 @media (max-width: 900px) {
-  .util-rates .util-rate:nth-child(n+4),
-  .util-rates .util-rate__note { display: none; }
   .util-contacts .util-email { display: none; }
+  /* ticker shows all rates — no hiding needed */
 }
 @media (max-width: 640px) {
-  .util-rates .util-rate:nth-child(n+3) { display: none; }
-  .util-socials { display: none; }
+  .util-contacts { display: none; } /* full width for ticker on small screens */
+}
+@media (max-width: 480px) {
+  .utilbar__inner { height: 36px; }
 }
 
 /* ============================================================
