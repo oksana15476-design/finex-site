@@ -574,9 +574,13 @@ footer {
 .foot-brand p { font-size: 13px; color: rgba(255, 255, 255, 0.55); margin-top: 16px; max-width: 320px; line-height: 1.6; }
 .foot-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin-top: 40px; padding-top: 24px;
-  display: flex; justify-content: space-between; font-size: 12px; color: rgba(255, 255, 255, 0.4);
+  margin-top: 40px; padding-top: 20px;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  font-size: 12px; color: rgba(255, 255, 255, 0.4);
 }
+.foot-bottom .foot-legal-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.foot-bottom .foot-legal-links a { color: rgba(255, 255, 255, 0.45); white-space: nowrap; }
+.foot-bottom .foot-legal-links a:hover { color: rgba(255, 255, 255, 0.8); }
 
 /* — Buttons override for nav — */
 .nav .btn-primary { height: 38px; padding: 0 16px; font-size: 13px; }
@@ -654,20 +658,6 @@ footer { padding: 36px 0 20px; }
 .foot-col h4 { font-size: 11px; margin: 0 0 10px; }
 .foot-col a { padding: 3px 0; font-size: 12px; line-height: 1.45; }
 .foot-brand p { font-size: 12px; margin-top: 10px; line-height: 1.5; }
-.foot-legal {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin-top: 20px; padding-top: 16px;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 24px;
-  font-size: 11px;
-  line-height: 1.55;
-}
-.foot-legal .req { font-size: 10px; }
-.foot-legal-links a { font-size: 11px; padding: 1px 0; }
-.foot-bottom {
-  margin-top: 18px; padding-top: 14px;
-  font-size: 11px;
-}
 
 /* ============================================================
    CALCULATOR — savings vs bank block
@@ -1511,16 +1501,6 @@ footer { padding: 36px 0 20px; }
 /* ============================================================
    FOOTER — add requisites row
    ============================================================ */
-.foot-legal {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin-top: 24px; padding-top: 20px;
-  display: flex; justify-content: space-between; align-items: center; gap: 24px;
-  font-size: 12px; color: rgba(255, 255, 255, 0.4);
-}
-@media (max-width: 768px) { .foot-legal { flex-direction: column; align-items: flex-start; gap: 12px; } }
-.foot-legal-links { display: flex; flex-direction: row; flex-wrap: wrap; gap: 6px 20px; }
-.foot-legal-links a { color: rgba(255, 255, 255, 0.45); white-space: nowrap; }
-.foot-legal-links a:hover { color: rgba(255, 255, 255, 0.8); }
 
 /* ============================================================
    UTILITY BAR (top stripe with rates + contacts)
